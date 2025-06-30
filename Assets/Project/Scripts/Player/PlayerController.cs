@@ -44,32 +44,37 @@ public class PlayerController : MonoBehaviour
     {
         
         float moveValue = Input.GetAxis("Horizontal");
-        
+
         if (moveValue != 0)
         {
             lastMoveDirection = moveValue;
-            if (moveValue < 0)
-            {
-                player.Play("left run");
-            }
-            else if (moveValue > 0)
-            {
-                player.Play("right run");
-            }
-            else
-            {
-                player.Play("right idle");
-            }
         }
+
+
         player.SetFloat("MoveX", moveValue);
 
-        if (moveValue == 0)
+
+         if (!isGrounded)
+         {
+            player.Play("jump");
+            return;
+         }
+
+        if (moveValue != 0)
         {
             if (lastMoveDirection < 0)
+                player.Play("left run");
+            else
+                player.Play("right run");
+        }
+        else
+        {
+            if(lastMoveDirection<0) 
                 player.Play("left idle");
             else
                 player.Play("right idle");
-        }
 
+        }
     }
+   
 }
