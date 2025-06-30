@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public float checkRadius = 0.2f;
     public LayerMask groundLayer;
+
+    public Animator player;
+    private float lastMoveDirection = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
+        
         rb.velocity = new Vector2(moveInput * movespeed, rb.velocity.y);
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
@@ -30,5 +34,42 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
+
+
+        
+        PlayCharacterAni();
+    }
+
+    private void PlayCharacterAni()
+    {
+        
+        float moveValue = Input.GetAxis("Horizontal");
+        
+        if (moveValue != 0)
+        {
+            lastMoveDirection = moveValue;
+            if (moveValue < 0)
+            {
+                player.Play("left run");
+            }
+            else if (moveValue > 0)
+            {
+                player.Play("right run");
+            }
+            else
+            {
+                player.Play("right idle");
+            }
+        }
+        player.SetFloat("MoveX", moveValue);
+
+        if (moveValue == 0)
+        {
+            if (lastMoveDirection < 0)
+                player.Play("left idle");
+            else
+                player.Play("right idle");
+        }
+
     }
 }
