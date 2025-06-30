@@ -4,5 +4,32 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Project/Scenes/zhuque2.unity
+    guid: 38d2f7ef8d57e3f438d72496dc10a75c
+  - enabled: 1
+    path: Assets/Project/Scenes/baihu1.unity
+    guid: 00826848d3573b44ea2e5544c4b69d0f
+  - enabled: 1
+    path: Assets/Project/Scenes/baihu2.unity
+    guid: ec2b060cafc42db4a848e0f9fa75b96e
+  - enabled: 1
+    path: Assets/Project/Scenes/qinglong1.unity
+    guid: 20aa476210170004a904a2563545e0b4
+  - enabled: 1
+    path: Assets/Project/Scenes/qinglong2.unity
+    guid: d588cf989164eb14391c9e43b5e19cb5
+  - enabled: 1
+    path: Assets/Project/Scenes/xuanwu1.unity
+    guid: a95720c82eb470c47837e5dccd672c61
+  - enabled: 1
+    path: Assets/Project/Scenes/xuanwu2.unity
+    guid: e321edbaf0920d844883ef6b2f3f3cc3
+  - enabled: 1
+    path: Assets/Project/Scenes/zhongyuan.unity
+    guid: 12f34d134a86f78478dbcef0181e4601
+  - enabled: 1
+    path: Assets/Project/Scenes/zhuque1.unity
+    guid: e8452cd7a212bb947b592601bbe6dbd7
   m_configObjects: {}
