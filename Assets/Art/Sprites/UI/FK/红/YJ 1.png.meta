@@ -1,43 +1,43 @@
 fileFormatVersion: 2
-guid: 9c060eecf4e49af4c957499b826b54ea
+guid: a2605a6c2fe563d4cbc8eacb16cfc410
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7699955260654708124
-    second: YJ_0
+      213: -8572391055465279332
+    second: YJ 1_0
   - first:
-      213: -1441161062653820048
-    second: YJ_1
+      213: -918361116868817958
+    second: YJ 1_1
   - first:
-      213: 1843636169070875232
-    second: YJ_2
+      213: 7685700437077848051
+    second: YJ 1_2
   - first:
-      213: -6329009012713542469
-    second: YJ_3
+      213: 6422644342102345030
+    second: YJ 1_3
   - first:
-      213: 952339707093129517
-    second: YJ_4
+      213: 7744004400710010322
+    second: YJ 1_4
   - first:
-      213: 4103513269327244569
-    second: YJ_5
+      213: -8009780073396186231
+    second: YJ 1_5
   - first:
-      213: -3140314046747258058
-    second: YJ_6
+      213: 3675386198548814554
+    second: YJ 1_6
   - first:
-      213: -8548839979279913112
-    second: YJ_7
+      213: 8582667031870058824
+    second: YJ 1_7
   - first:
-      213: -4286527828287835114
-    second: YJ_8
+      213: -2351291585860526041
+    second: YJ 1_8
   - first:
-      213: 7762346459281788306
-    second: YJ_9
+      213: -3862009192867536878
+    second: YJ 1_9
   - first:
-      213: 2949917940935648911
-    second: YJ_10
+      213: 3136464302783421505
+    second: YJ 1_10
   - first:
-      213: -330134165028383496
-    second: YJ_11
+      213: -1438914584401941941
+    second: YJ 1_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -82,7 +82,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
-  spriteBorder: {x: 32, y: 32, z: 32, w: 32}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -119,23 +119,11 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: YJ_0
+      name: YJ 1_0
       rect:
         serializedVersion: 2
         x: 48
@@ -149,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46a964e8c73442590800000000000000
-      internalID: -7699955260654708124
+      spriteID: c909147e0cfb80980800000000000000
+      internalID: -8572391055465279332
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_1
+      name: YJ 1_1
       rect:
         serializedVersion: 2
         x: 112
@@ -170,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 073056c26a7fffbe0800000000000000
-      internalID: -1441161062653820048
+      spriteID: adbc08d0e635143f0800000000000000
+      internalID: -918361116868817958
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_2
+      name: YJ 1_2
       rect:
         serializedVersion: 2
         x: 176
@@ -191,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0621888e359e59910800000000000000
-      internalID: 1843636169070875232
+      spriteID: 3ffe612b3d719aa60800000000000000
+      internalID: 7685700437077848051
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_3
+      name: YJ 1_3
       rect:
         serializedVersion: 2
         x: 48
@@ -212,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbca6f0e5d7da28a0800000000000000
-      internalID: -6329009012713542469
+      spriteID: 645cea12001d12950800000000000000
+      internalID: 6422644342102345030
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_4
+      name: YJ 1_4
       rect:
         serializedVersion: 2
         x: 112
@@ -233,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2919cafae3673d00800000000000000
-      internalID: 952339707093129517
+      spriteID: 2d5c16319fa387b60800000000000000
+      internalID: 7744004400710010322
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_5
+      name: YJ 1_5
       rect:
         serializedVersion: 2
         x: 176
@@ -254,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91d2a5db39b92f830800000000000000
-      internalID: 4103513269327244569
+      spriteID: 983d73cf57b87d090800000000000000
+      internalID: -8009780073396186231
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_6
+      name: YJ 1_6
       rect:
         serializedVersion: 2
         x: 48
@@ -275,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 633d578330d5b64d0800000000000000
-      internalID: -3140314046747258058
+      spriteID: ada10e84648910330800000000000000
+      internalID: 3675386198548814554
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_7
+      name: YJ 1_7
       rect:
         serializedVersion: 2
         x: 112
@@ -296,14 +284,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 86fec51255b6c5980800000000000000
-      internalID: -8548839979279913112
+      spriteID: 841321c4132cb1770800000000000000
+      internalID: 8582667031870058824
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_8
+      name: YJ 1_8
       rect:
         serializedVersion: 2
         x: 176
@@ -317,14 +305,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 614b313b6a13384c0800000000000000
-      internalID: -4286527828287835114
+      spriteID: 7202b65a2c88e5fd0800000000000000
+      internalID: -2351291585860526041
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_9
+      name: YJ 1_9
       rect:
         serializedVersion: 2
         x: 48
@@ -338,14 +326,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29d80016af469bb60800000000000000
-      internalID: 7762346459281788306
+      spriteID: 21066d3d913676ac0800000000000000
+      internalID: -3862009192867536878
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_10
+      name: YJ 1_10
       rect:
         serializedVersion: 2
         x: 112
@@ -359,14 +347,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f86650aecb630f820800000000000000
-      internalID: 2949917940935648911
+      spriteID: 14c591a6aa5f68b20800000000000000
+      internalID: 3136464302783421505
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YJ_11
+      name: YJ 1_11
       rect:
         serializedVersion: 2
         x: 176
@@ -380,8 +368,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f4534dd9b02b6bf0800000000000000
-      internalID: -330134165028383496
+      spriteID: b4ae7962fc2f70ce0800000000000000
+      internalID: -1438914584401941941
       vertices: []
       indices: 
       edges: []
