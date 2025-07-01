@@ -12,9 +12,18 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public float checkRadius = 0.2f;
     public LayerMask groundLayer;
+    //人物的行走和跳跃
 
     public Animator player;
     private float lastMoveDirection = 1f;
+    //人物静止的idle的方向
+
+    private bool isAttacking = false;
+    //人物攻击动画设置
+
+    private bool isWounded = false;
+    //人物受伤
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +33,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isWounded)
+        {
+            return;
+        }
+
         float moveInput = Input.GetAxisRaw("Horizontal");
         
         rb.velocity = new Vector2(moveInput * movespeed, rb.velocity.y);
@@ -35,12 +49,18 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
 
+        if (!isAttacking)
+        {
+            PlayCharacterNoAttack();
+            TryAttack();
+      
+        }
 
-        
-        PlayCharacterAni();
+          
+
     }
-
-    private void PlayCharacterAni()
+    #region 播放动画的逻辑
+    private void PlayCharacterNoAttack()
     {
         
         float moveValue = Input.GetAxis("Horizontal");
@@ -75,6 +95,58 @@ public class PlayerController : MonoBehaviour
                 player.Play("right idle");
 
         }
+
+        
     }
-   
+    //除了攻击的动作的设置播放
+    #region 攻击
+    void TryAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            string direction = lastMoveDirection < 0 ? "left" : "right";
+            PlayAttack(direction+" attack1", 1f);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            string direction = lastMoveDirection < 0 ? "left" : "right";
+            PlayAttack(direction+" attack2", 1f);
+        }
+    }
+    void PlayAttack(string animationName,float duration)
+    {
+        isAttacking = true;
+        player.Play(animationName);
+        StartCoroutine(AttackCooldown(duration));
+    }
+    private IEnumerator AttackCooldown(float time)
+    {
+        isAttacking = true;
+        yield return new WaitForSeconds(time);
+        isAttacking = false;
+    }
+    //协程
+    #endregion
+
+    #region 受伤
+    
+    public void TakeDamage()
+    {
+        if (isWounded) return;
+
+        isWounded = true;
+        player.Play("wounded");
+
+        rb.velocity = Vector2.zero;
+
+        StartCoroutine(WoundCooldown(0.5f));
+    }
+
+    IEnumerator WoundCooldown(float time)
+    {
+        yield return new WaitForSeconds(time);
+        isWounded = false;
+    }
+    #endregion
+    #endregion
 }

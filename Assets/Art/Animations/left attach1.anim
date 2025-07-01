@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: right idle
+  m_Name: left attach1
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -20,11 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: b678ea7ee808f814bb115cacc218dbfb, type: 3}
+      value: {fileID: 21300000, guid: 7acbdd4a2d6a26046b6feddb1c5c994c, type: 3}
     - time: 0.33333334
-      value: {fileID: 21300000, guid: 4a4e8b1ad56c23741bf3adf31921c6b9, type: 3}
+      value: {fileID: 21300000, guid: 0721d3493efd92e449936a91dd8627f0, type: 3}
     - time: 0.6666667
-      value: {fileID: 21300000, guid: b678ea7ee808f814bb115cacc218dbfb, type: 3}
+      value: {fileID: 21300000, guid: ff098a3f5007de445a6bcb336fea9299, type: 3}
+    - time: 1
+      value: {fileID: 21300000, guid: 7acbdd4a2d6a26046b6feddb1c5c994c, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,20 +46,21 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: b678ea7ee808f814bb115cacc218dbfb, type: 3}
-    - {fileID: 21300000, guid: 4a4e8b1ad56c23741bf3adf31921c6b9, type: 3}
-    - {fileID: 21300000, guid: b678ea7ee808f814bb115cacc218dbfb, type: 3}
+    - {fileID: 21300000, guid: 7acbdd4a2d6a26046b6feddb1c5c994c, type: 3}
+    - {fileID: 21300000, guid: 0721d3493efd92e449936a91dd8627f0, type: 3}
+    - {fileID: 21300000, guid: ff098a3f5007de445a6bcb336fea9299, type: 3}
+    - {fileID: 21300000, guid: 7acbdd4a2d6a26046b6feddb1c5c994c, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.70000005
+    m_StopTime: 1.0333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
