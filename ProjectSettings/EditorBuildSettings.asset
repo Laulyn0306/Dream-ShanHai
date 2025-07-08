@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Project/Scenes/zhuque1.unity
     guid: e8452cd7a212bb947b592601bbe6dbd7
+  - enabled: 1
+    path: Assets/Project/Scenes/test.unity
+    guid: a59aab4c8ffb29b4cb43a6ad547e6dab
   m_configObjects: {}

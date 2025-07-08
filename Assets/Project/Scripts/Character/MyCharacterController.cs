@@ -8,6 +8,10 @@ public class MyCharacterController : MonoBehaviour
     public Transform pointB;
     //巡逻点
 
+    private bool isTurning = false;
+    public float turnPauseDuration = 0.3f;
+    //转向
+
     public float moveSpeed = 2f;
     public float detectRange = 5f;
     public float attactRange = 1.5f;
@@ -28,12 +32,14 @@ public class MyCharacterController : MonoBehaviour
     private bool isHurt = false;
     private float hurtDuration = 0.5f;
     private float hurtTime=0f;
-   
+    public float knockbackForce = 5f;
+   //受伤
     
-    //受伤
-    
-    //private float lastMoveDirection = 1f;
-    //
+    private float lastDirectionX = 1f;
+    //转向
+
+    public GameObject magicPrefab;
+    public Transform magicSpawnPoint;
    
     // Start is called before the first frame update
     void Start()
@@ -64,7 +70,7 @@ public class MyCharacterController : MonoBehaviour
             }
             return;
         }
-        #region 先攻击再追击最后巡逻
+        #region 攻击>追击>巡逻
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -122,26 +128,46 @@ public class MyCharacterController : MonoBehaviour
 
     void Patrol()
     {
-        Vector3 target = goingToB ? pointB.position : pointA.position;
-        MoveTowards(target);
+        if (isTurning) return;
 
-        if (Vector2.Distance(transform.position, target) < 0.2f)
+        Vector3 target = goingToB ? pointB.position : pointA.position;
+        
+
+        if (Vector2.Distance(transform.position, target) < 0.1f)
         {
-            goingToB = !goingToB;
+            StartCoroutine(TurnAround());
+            return;
         }
+        
+        MoveTowards(target);
     }
     void MoveTowards(Vector3 target)
     {
         
         Vector2 direction = (target - transform.position).normalized;
-        //spriteRenderer.flipX = direction.x < 0;
+        
 
         if (Mathf.Abs(direction.x)>0.01f)
         {
             rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
             animator.SetBool("IsWalking", true);
             animator.SetFloat("moveX", direction.x);
-        }
+
+            if (direction.x < 0 && lastDirectionX >= 0)
+            {
+                animator.SetTrigger("TurnLeft");
+                Debug.Log("转左");
+            }
+            else if (direction.x > 0 && lastDirectionX <= 0)
+            {
+                animator.SetTrigger("TurnRight");
+                Debug.Log("转右");
+            }
+
+            lastDirectionX = direction.x;
+
+            }
+        
 
         else
         {
@@ -189,7 +215,34 @@ public class MyCharacterController : MonoBehaviour
                 Debug.Log("右受伤");
             }
 
+            Vector2 knockbackDir= (transform.position - player.position).normalized;
+            rb.AddForce(knockbackForce * knockbackDir, ForceMode2D.Impulse);
+            Debug.Log("qq");
+
         }
         
+    }
+
+    IEnumerator TurnAround()
+    {
+        isTurning = true;
+
+        rb.velocity = Vector2.zero;
+        animator.SetBool("IsWalking", false);
+
+        yield return new WaitForSeconds(turnPauseDuration);
+
+        goingToB = !goingToB;
+
+        isTurning = false;
+    }
+
+    public void FireMagic()
+    {
+        GameObject magic = Instantiate(magicPrefab, magicSpawnPoint.position, Quaternion.identity);
+        Vector2 dir = (player.position - transform.position).normalized;
+        magic.GetComponent<Rigidbody2D>().velocity = dir * 5f;
+
+        Debug.Log("已发射");
     }
 }
