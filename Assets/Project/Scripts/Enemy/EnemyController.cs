@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyCharacterController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
+    public EnemyDataSO data;
+
     public Transform pointA;
     public Transform pointB;
+
     //巡逻点
 
     private bool isTurning = false;
     public float turnPauseDuration = 0.3f;
     //转向
 
-    public float moveSpeed = 2f;
-    public float detectRange = 5f;
-    public float attactRange = 1.5f;
-    //
+    
 
     private Transform player;
     private Rigidbody2D rb;
@@ -30,23 +30,30 @@ public class MyCharacterController : MonoBehaviour
     private bool goingToB = true;
 
     private bool isHurt = false;
-    private float hurtDuration = 0.5f;
     private float hurtTime=0f;
-    public float knockbackForce = 5f;
+    
    //受伤
     
     private float lastDirectionX = 1f;
     //转向
 
-    public GameObject magicPrefab;
     public Transform magicSpawnPoint;
-   
+
+    [Header("魔法生成偏移距离")]
+    public float meleeMagicDistance = 1f;
+    public float rangeMagicDistance = 3f;
+
+
+    private bool canShoot = true;
+    private Animation magicAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        
        
     }
 
@@ -79,39 +86,48 @@ public class MyCharacterController : MonoBehaviour
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if (distanceToPlayer <= attactRange)
+
+        if (distanceToPlayer <= data.attackRange)
         {
+            //近战攻击
 
             animator.SetBool("IsAttacking", true);
             rb.velocity = Vector2.zero;
             animator.SetBool("IsWalking", false);
-            Debug.Log("开始攻击");
+
+            if (canShoot)
+            {
+                FireMagic(true);
+                StartCoroutine(ShootCooldown());
+            }
+            Debug.Log("近战攻击");
+        }
+        else if (distanceToPlayer <= data.detectRange)
+        {
+            animator.SetBool("IsAttacking", false);
+            rb.velocity = Vector2.zero;
+            animator.SetBool("IsWalking", false);
+
+            if (canShoot)
+            {
+                FireMagic(false);
+                StartCoroutine(ShootCooldown());
+            }
+            Debug.Log("远程攻击");
         }
         else
         {
             animator.SetBool("IsAttacking", false);
-
-
+            chasingPlayer = false;
+            Patrol();
+            Debug.Log("巡逻");
+        }
             #region 追击
 
-            if (distanceToPlayer <= detectRange)
-            {
-                //追击
-                chasingPlayer = true;
-                MoveTowards(player.position);
-                Debug.Log("开始追击");
-            }
-
-            else
-            {
-                //巡逻
-                chasingPlayer = false;
-                Debug.Log("开始巡逻");
-                Patrol();
-            }
+           
 
                 
-        }
+        
         #endregion
 
 
@@ -149,7 +165,7 @@ public class MyCharacterController : MonoBehaviour
 
         if (Mathf.Abs(direction.x)>0.01f)
         {
-            rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(direction.x * data.moveSpeed, rb.velocity.y);
             animator.SetBool("IsWalking", true);
             animator.SetFloat("moveX", direction.x);
 
@@ -193,7 +209,7 @@ public class MyCharacterController : MonoBehaviour
 
             
             isHurt = true;
-            hurtTime = hurtDuration;
+            hurtTime = data.hurtDuration;
 
             //停止移动
             rb.velocity = Vector2.zero;
@@ -216,7 +232,7 @@ public class MyCharacterController : MonoBehaviour
             }
 
             Vector2 knockbackDir= (transform.position - player.position).normalized;
-            rb.AddForce(knockbackForce * knockbackDir, ForceMode2D.Impulse);
+            rb.AddForce(data.knockbackForce * knockbackDir, ForceMode2D.Impulse);
             Debug.Log("qq");
 
         }
@@ -237,12 +253,59 @@ public class MyCharacterController : MonoBehaviour
         isTurning = false;
     }
 
-    public void FireMagic()
+    IEnumerator ShootCooldown()
     {
-        GameObject magic = Instantiate(magicPrefab, magicSpawnPoint.position, Quaternion.identity);
-        Vector2 dir = (player.position - transform.position).normalized;
-        magic.GetComponent<Rigidbody2D>().velocity = dir * 5f;
+        canShoot = false;
+        yield return new WaitForSeconds(data.magicCooldown);
+        canShoot = true;
+    }
+    private void FireMagic(int type)
+    {
+        bool isMelee = (type == 0);
+        FireMagic(isMelee);
+    }
+    public void FireMagic(bool isMelee)
+    {
+        if (data.magicPrefab == null || magicSpawnPoint == null) return;
 
-        Debug.Log("已发射");
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+
+        float offsetDistance = isMelee ? meleeMagicDistance : rangeMagicDistance;
+
+        Vector3 spawPos = transform.position + directionToPlayer * offsetDistance;
+
+        GameObject magic = Instantiate(data.magicPrefab,spawPos, Quaternion.identity);
+
+        //
+        magic.transform.right = directionToPlayer;
+
+        Animator magicAnimator = magic.GetComponent<Animator>();
+
+        
+        Debug.Log("yishengc");
+        
+        if (magicAnimator == null)
+        {
+            Debug.LogWarning("magicPrefab 没有 Animator！");
+            return;
+        }
+
+        
+        if (isMelee)
+        {
+            magicAnimator.Play("jing",0,0f);
+            Debug.Log("jing");
+
+        }
+        else
+        {
+            magicAnimator.Play("yuan",0,0f);
+            Debug.Log("yuan");
+        }
+        Destroy(magic, 3f);
+
+        
+
+         
     }
 }
