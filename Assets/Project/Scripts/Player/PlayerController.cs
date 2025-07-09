@@ -149,4 +149,28 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
     #endregion
+
+    public void TakeHit(float delay=0.6f)
+    {
+        if (!isWounded)
+        {
+            StartCoroutine(HurtRoutine(delay));
+
+        }
+    }
+
+    IEnumerator HurtRoutine(float delay)
+    {
+        isWounded = true;
+        this.enabled = false;
+        rb.velocity = Vector2.zero;
+
+        yield return new WaitForSeconds(delay);
+        Debug.Log("玩家受伤了");
+        player.SetTrigger("Wound");
+
+        yield return new WaitForSeconds(0.4f);
+        this.enabled = true;
+        isWounded = false;
+    }
 }

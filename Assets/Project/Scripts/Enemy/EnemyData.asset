@@ -17,7 +17,18 @@ MonoBehaviour:
   attackRange: 2
   hurtDuration: 0.5
   knockbackForce: 5
-  magicPrefab: {fileID: 23444589079713631, guid: d5d9dfff85ae1464faf599b6eb801dd5,
-    type: 3}
   magicSpeed: 5
   magicCooldown: 2
+  magicMappings:
+  - enemyID: BH
+    magicPrefab: {fileID: 23444589079713631, guid: d5d9dfff85ae1464faf599b6eb801dd5,
+      type: 3}
+  - enemyID: FH
+    magicPrefab: {fileID: 5744335035692810353, guid: c2207750b859cad4a85654115ae5030e,
+      type: 3}
+  - enemyID: QL
+    magicPrefab: {fileID: 6062419050946666356, guid: 294ac76b270710a409f6154c62bfdf32,
+      type: 3}
+  - enemyID: XW
+    magicPrefab: {fileID: 2965351275218782501, guid: 8280809c49fbcc544a8b2835ce4e064f,
+      type: 3}

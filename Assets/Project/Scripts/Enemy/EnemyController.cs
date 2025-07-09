@@ -47,14 +47,18 @@ public class EnemyController : MonoBehaviour
     private bool canShoot = true;
     private Animation magicAnimator;
 
+    public float magicHitDelay = 0.6f;
+
+    private string enemyID;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        
-       
+
+        enemyID = GetIDFromName(gameObject.name);
+        Debug.Log($"自动识别到 enemyID: {enemyID}");
     }
 
     // Update is called once per frame
@@ -95,12 +99,7 @@ public class EnemyController : MonoBehaviour
             rb.velocity = Vector2.zero;
             animator.SetBool("IsWalking", false);
 
-            if (canShoot)
-            {
-                FireMagic(true);
-                StartCoroutine(ShootCooldown());
-            }
-            Debug.Log("近战攻击");
+            
         }
         else if (distanceToPlayer <= data.detectRange)
         {
@@ -112,8 +111,9 @@ public class EnemyController : MonoBehaviour
             {
                 FireMagic(false);
                 StartCoroutine(ShootCooldown());
+                Debug.Log("远程攻击");
             }
-            Debug.Log("远程攻击");
+           
         }
         else
         {
@@ -259,6 +259,15 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(data.magicCooldown);
         canShoot = true;
     }
+    public void TriggerMagic(int type)
+    {
+        if (canShoot)
+        {
+            bool isMelee = (type == 0);
+            FireMagic(isMelee);
+            StartCoroutine(ShootCooldown());
+        }
+    }
     private void FireMagic(int type)
     {
         bool isMelee = (type == 0);
@@ -266,24 +275,26 @@ public class EnemyController : MonoBehaviour
     }
     public void FireMagic(bool isMelee)
     {
-        if (data.magicPrefab == null || magicSpawnPoint == null) return;
+        GameObject magicPrefab = GetMagicPrefabByID(enemyID);
+
+        if (magicPrefab == null || magicSpawnPoint == null||player==null) return;
 
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
 
         float offsetDistance = isMelee ? meleeMagicDistance : rangeMagicDistance;
 
-        Vector3 spawPos = transform.position + directionToPlayer * offsetDistance;
+        Vector3 spawPos = player.position + directionToPlayer * offsetDistance;
 
-        GameObject magic = Instantiate(data.magicPrefab,spawPos, Quaternion.identity);
+        GameObject magic = Instantiate(magicPrefab,spawPos, Quaternion.identity);
 
         //
         magic.transform.right = directionToPlayer;
 
         Animator magicAnimator = magic.GetComponent<Animator>();
+        Debug.Log($"Animator组件: {magicAnimator}");
 
-        
-        Debug.Log("yishengc");
-        
+
+
         if (magicAnimator == null)
         {
             Debug.LogWarning("magicPrefab 没有 Animator！");
@@ -308,4 +319,32 @@ public class EnemyController : MonoBehaviour
 
          
     }
+
+    private string GetIDFromName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return"Unknown";
+
+        int index = name.IndexOf("_");
+
+        if (index < 0)
+        {
+            return name;
+        }
+
+        return name.Substring(0, index);
+    }
+
+    private GameObject GetMagicPrefabByID(string id)
+    {
+        foreach (var mapping in data.magicMappings)
+        {
+            if (mapping.enemyID == id)
+                return mapping.magicPrefab;
+        }
+        Debug.LogWarning($"没找到 ID 为 {id} 的魔法特效，请检查 EnemyDataSO 设置！");
+        return null;
+    }
+
+    
 }
