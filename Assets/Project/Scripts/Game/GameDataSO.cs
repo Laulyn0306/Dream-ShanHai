@@ -43,8 +43,10 @@ public  class GameDataSO: ScriptableObject
     public  Dictionary<string,int> inventory =new Dictionary<string,int>();
     //道具背包（名字，数量）
 
-    [Header("设置")]
+    [Header("设置音量")]
+    [Range(0f,1f)]
     public  float musicVolume = 0.8f;
+    [Range(0f, 1f)]
     public  float sfxVolume = 0.8f;
     //设置
     #region 存档系统

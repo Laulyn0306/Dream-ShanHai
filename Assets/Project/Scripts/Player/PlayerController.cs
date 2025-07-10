@@ -24,15 +24,25 @@ public class PlayerController : MonoBehaviour
     private bool isWounded = false;
     //人物受伤
 
+    public bool isControled = false;
+    public Transform enemy;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        //enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isControled)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         if (isWounded)
         {
             return;
@@ -172,5 +182,24 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         this.enabled = true;
         isWounded = false;
+    }
+
+    public void PlayHurtAnimation()
+    {
+        if (transform.position.x < enemy.position.x)
+        {
+            player.SetTrigger("Wound");
+        }
+    }
+
+    public void RestroeControlAfterDelay(float delay)
+    {
+        StartCoroutine(Recover(delay));
+    }
+
+    private IEnumerator Recover(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isControled = false;
     }
 }

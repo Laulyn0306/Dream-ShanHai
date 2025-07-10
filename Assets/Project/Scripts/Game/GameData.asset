@@ -22,5 +22,5 @@ MonoBehaviour:
   checkPoint: {x: 0, y: 0}
   isPaused: 0
   collectCount: 0
-  musicVolume: 0.8
+  musicVolume: 0.6167658
   sfxVolume: 0.8

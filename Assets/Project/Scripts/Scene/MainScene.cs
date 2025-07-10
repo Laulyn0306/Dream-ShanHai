@@ -5,26 +5,48 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+public enum ButtonType
+{
+    LoadScene,
+    ShowSaveCanvas,
+    QuitGame,
+    ShowSetCanvas
+        //
+}
+
 [System.Serializable]
 public class ButtonScenePair
 {
     public Button button;
     public string sceneName;
+    public ButtonType buttonType;
 }
 
 
 public class MainScene : MonoBehaviour
 {
+    public GameDataSO gameData;
+
+
     public RectTransform selector;
+   
 
     [Header("按键与场景映射")]
+
+    public GameObject saveCanvas;
+    public GameObject settingCanvas;
     public List<ButtonScenePair> buttonSceneMappings = new List<ButtonScenePair>();
 
     
     private bool isTransitioning = false;
+
+    public AudioSource bgmSource;
+    public AudioSource sfxSource;
     // Start is called before the first frame update
     void Start()
     {
+        
+
         if (buttonSceneMappings.Count > 0)
         {
             
@@ -35,12 +57,14 @@ public class MainScene : MonoBehaviour
         {
             string sceneName = pair.sceneName;
             float targetY = pair.button.transform.position.y;
+            ButtonType type = pair.buttonType;
 
-            pair.button.onClick.AddListener(() => OnButtonClick(targetY, sceneName));
+            pair.button.onClick.AddListener(() => OnButtonClick(targetY, sceneName, type));
         }
 
-        
-       
+
+        gameData.Load();  // 先加载存档数据
+        ApplyVolumeSettings();
 
 
 
@@ -49,7 +73,7 @@ public class MainScene : MonoBehaviour
     {
         obj.position = new Vector3(obj.position.x, targetY, obj.position.z);
     }
-    void OnButtonClick(float targetY, string sceneName)
+    void OnButtonClick(float targetY, string sceneName,ButtonType type)
     {
 
         if (isTransitioning) return;
@@ -66,10 +90,34 @@ public class MainScene : MonoBehaviour
         selector.DOMove(targetPos, 0.3f)
        .SetEase(Ease.OutCubic)
        .OnComplete(() => {
-           Debug.Log($"滑片滑完啦～跳转到：{sceneName}");
-           SceneManager.LoadScene(sceneName);
+           Debug.Log($"滑片滑完啦～～处理类型：{type}");
+           
        });
 
+        switch (type)
+        {
+            case ButtonType.LoadScene:
+                SceneManager.LoadScene(sceneName);
+                break;
+            case ButtonType.ShowSaveCanvas:
+                ShowSaveCanvas();
+                break;
+            //
+
+            case ButtonType.QuitGame:
+                QuitGame();
+                break;
+
+            case ButtonType.ShowSetCanvas:
+                ShowSetCanvas();
+                break;
+
+            default:
+                Debug.LogWarning("未知按钮类型！");
+                break;
+        }
+
+        isTransitioning = false;
     }
 
     // Update is called once per frame
@@ -77,4 +125,32 @@ public class MainScene : MonoBehaviour
     {
         
     }
+
+    void ApplyVolumeSettings()
+    {
+        bgmSource.volume = gameData.musicVolume;
+        sfxSource.volume = gameData.sfxVolume;
+    }
+    void ShowSaveCanvas()
+    {
+        if (saveCanvas != null)
+        {
+            saveCanvas.SetActive(true);
+        }
+    }
+
+    void ShowSetCanvas()
+    {
+        if (settingCanvas != null)
+        {
+            settingCanvas.SetActive(true);
+        }
+    }
+    void QuitGame()
+    {
+        Debug.Log("退出游戏");
+        Application.Quit();
+    }
+
+
 }

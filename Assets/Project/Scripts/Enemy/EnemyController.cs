@@ -99,7 +99,10 @@ public class EnemyController : MonoBehaviour
             rb.velocity = Vector2.zero;
             animator.SetBool("IsWalking", false);
 
-            
+            player.GetComponent<PlayerController>().isControled = true;
+            player.GetComponent<PlayerController>().enemy = this.transform;
+            player.GetComponent<PlayerController>().PlayHurtAnimation();
+            player.GetComponent<PlayerController>().RestroeControlAfterDelay(0.8f);
         }
         else if (distanceToPlayer <= data.detectRange)
         {
@@ -111,6 +114,14 @@ public class EnemyController : MonoBehaviour
             {
                 FireMagic(false);
                 StartCoroutine(ShootCooldown());
+
+                PlayerController pc = player.GetComponent<PlayerController>();
+                pc.isControled = true;
+                pc.enemy = this.transform;
+                pc.PlayHurtAnimation();
+                pc.RestroeControlAfterDelay(0.8f);
+
+
                 Debug.Log("远程攻击");
             }
            
