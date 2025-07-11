@@ -80,8 +80,14 @@ public class SettingCanvas : MonoBehaviour
     [Header("对应的分辨率宽高")]
     public Vector2Int[] resolutions;
 
-    
 
+    void Awake()
+    {
+
+        musicCanvas.SetActive(true);
+        screenCanvas.SetActive(false);
+        Debug.Log("已设置好");
+    }
     // Start is called before the first frame update
     void Start()
     {

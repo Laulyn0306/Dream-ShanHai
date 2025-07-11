@@ -4,6 +4,9 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public enum ButtonType
 {
@@ -43,6 +46,12 @@ public class MainScene : MonoBehaviour
     public AudioSource bgmSource;
     public AudioSource sfxSource;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        saveCanvas.SetActive(false);
+        settingCanvas.SetActive(false);
+    }
     void Start()
     {
         
@@ -149,7 +158,13 @@ public class MainScene : MonoBehaviour
     void QuitGame()
     {
         Debug.Log("退出游戏");
-        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;  // 停止运行
+#else
+    Application.Quit(); // 正式退出应用
+#endif
+        
     }
 
 
