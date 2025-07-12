@@ -11,10 +11,11 @@ using UnityEditor;
 public enum ButtonType
 {
     LoadScene,
-    ShowSaveCanvas,
+    CreateSaveCanvas,
     QuitGame,
-    ShowSetCanvas
-        //
+    ShowSetCanvas,
+    
+    //
 }
 
 [System.Serializable]
@@ -31,25 +32,31 @@ public class MainScene : MonoBehaviour
     public GameDataSO gameData;
 
 
+    public Transform canvas;
+
     public RectTransform selector;
    
 
     [Header("按键与场景映射")]
-
-    public GameObject saveCanvas;
     public GameObject settingCanvas;
+    public GameObject SaveCanvas;
     public List<ButtonScenePair> buttonSceneMappings = new List<ButtonScenePair>();
 
-    
+
+    [Header("生成的预制体")]
+    public GameObject saveCanvas;
+
+
     private bool isTransitioning = false;
 
+    
     public AudioSource bgmSource;
     public AudioSource sfxSource;
     // Start is called before the first frame update
 
     private void Awake()
     {
-        saveCanvas.SetActive(false);
+       
         settingCanvas.SetActive(false);
     }
     void Start()
@@ -108,10 +115,11 @@ public class MainScene : MonoBehaviour
             case ButtonType.LoadScene:
                 SceneManager.LoadScene(sceneName);
                 break;
-            case ButtonType.ShowSaveCanvas:
-                ShowSaveCanvas();
+
+            case ButtonType.CreateSaveCanvas:
+                CreateCanvas();
                 break;
-            //
+
 
             case ButtonType.QuitGame:
                 QuitGame();
@@ -120,6 +128,9 @@ public class MainScene : MonoBehaviour
             case ButtonType.ShowSetCanvas:
                 ShowSetCanvas();
                 break;
+
+
+
 
             default:
                 Debug.LogWarning("未知按钮类型！");
@@ -140,12 +151,22 @@ public class MainScene : MonoBehaviour
         bgmSource.volume = gameData.musicVolume;
         sfxSource.volume = gameData.sfxVolume;
     }
-    void ShowSaveCanvas()
+    void CreateCanvas()
     {
-        if (saveCanvas != null)
+        if (SaveCanvas == null)
         {
-            saveCanvas.SetActive(true);
+            Debug.LogWarning("亲亲你还没拖预制体进来哦！");
+            return;
         }
+        SaveCanvas.SetActive(true);
+        //gameobject go = instantiate(settingcanvas);
+
+        //go.transform.setparent(canvas, false);
+
+        //go.transform.localposition = vector3.zero;
+        //go.transform.localrotation = quaternion.identity;
+
+        //debug.log("创建成功～已经挂在canvas下面啦！");
     }
 
     void ShowSetCanvas()
