@@ -12,12 +12,20 @@ public class GameScene : MonoBehaviour
     [Header("预制体面板")]
     public GameObject SettingCamvas;
 
+    [Header("预制体IntroUI控制器")]
+    public GameObject LevelIntroUIPrefab;
+
+    [Header("预制体SSTalk控制器")]
+    public GameObject SSTalkControllerPrefab;
+
     [Header("生成位置")]
     public Transform buttonParent;
     // Start is called before the first frame update
     private void Awake()
     {
         CreateButton();
+        CreateLevelIntroUI();
+        CreateSSTalkController();
     }
     void Start()
     {
@@ -41,5 +49,15 @@ public class GameScene : MonoBehaviour
         btn_set.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -10
             );
 
+    }
+
+    void CreateLevelIntroUI()
+    {
+        GameObject levelIntroUI = Instantiate(LevelIntroUIPrefab);
+    }
+
+    void CreateSSTalkController()
+    {
+        GameObject SSTalkController = Instantiate(SSTalkControllerPrefab);
     }
 }

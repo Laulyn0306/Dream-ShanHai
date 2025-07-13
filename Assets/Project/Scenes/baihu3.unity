@@ -248,6 +248,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &677933267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 677933268}
+  - component: {fileID: 677933269}
+  m_Layer: 5
+  m_Name: buttonParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &677933268
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677933267}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000871, y: 1.0000871, z: 1.0000871}
+  m_Children: []
+  m_Father: {fileID: 724422729}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -263.7, y: 130}
+  m_SizeDelta: {x: 30, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &677933269
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677933267}
+  m_CullTransparentMesh: 0
 --- !u!1 &724422725
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +304,7 @@ GameObject:
   - component: {fileID: 724422728}
   - component: {fileID: 724422727}
   - component: {fileID: 724422726}
+  - component: {fileID: 724422730}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -283,7 +328,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 311
 --- !u!114 &724422727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +384,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1597061735}
+  - {fileID: 677933268}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -347,6 +393,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &724422730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724422725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec1decc3368b684887270a77289fa78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btn_quitPrefab: {fileID: 2137512536446251506, guid: 5a0f64534306d354bbe25f9c70b5a64d,
+    type: 3}
+  btn_setPrefab: {fileID: 1988164756270575651, guid: 1ca0ae403bca39649ae2ce7270fee685,
+    type: 3}
+  SettingCamvas: {fileID: 8201368190332693626, guid: 251afaef6752f2b43b5fcec4fc6ece39,
+    type: 3}
+  LevelIntroUIPrefab: {fileID: 7849740610957414574, guid: 68a0c5f578ef60c46866158c03bb7da7,
+    type: 3}
+  SSTalkControllerPrefab: {fileID: 2429221529696525470, guid: 984bf6394e0a9d24ba64f3eba9ef4225,
+    type: 3}
+  buttonParent: {fileID: 677933268}
 --- !u!1 &1015139366
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +490,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.015625, y: 0.015625, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0.015625, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0

@@ -27,11 +27,16 @@ public class PlayerController : MonoBehaviour
     public bool isControled = false;
     public Transform enemy;
 
+    public float climbSpeed = 3f;
+    private bool isClimbing = false;
+    private float defaultGravityScale;
+    
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         //enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
+        defaultGravityScale = rb.gravityScale;
     }
 
     // Update is called once per frame
@@ -64,6 +69,12 @@ public class PlayerController : MonoBehaviour
             PlayCharacterNoAttack();
             TryAttack();
       
+        }
+
+        if (isClimbing)
+        {
+            float vertical = Input.GetAxisRaw("Vertical");
+            rb.velocity = new Vector2(rb.velocity.x, vertical * climbSpeed);
         }
 
           
@@ -201,5 +212,28 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         isControled = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isClimbing = true;
+            rb.gravityScale = 0f;
+            rb.velocity = Vector2.zero;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isClimbing = false;
+            rb.gravityScale = defaultGravityScale;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("碰到了：" + collision.gameObject.name);
     }
 }
