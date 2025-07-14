@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float movespeed = 5f;
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private float lastMoveDirection = 1f;
     //人物静止的idle的方向
 
-    private bool isAttacking = false;
+    public bool isAttacking = false;
     //人物攻击动画设置
 
     private bool isWounded = false;
@@ -30,10 +30,31 @@ public class PlayerController : MonoBehaviour
     public float climbSpeed = 3f;
     private bool isClimbing = false;
     private float defaultGravityScale;
-    
+
+    public PlayerHealthUI healthUI;
+
+    public bool isDead = false;
+
+    public int maxHealth = 5;
+    public float currentHealth;
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        healthUI = PlayerHealthUI.Instance;
+        if (healthUI == null)
+        {
+            Debug.LogError("PlayerHealthUI实例丢了！");
+        }
+       
         rb = GetComponent<Rigidbody2D>();
         //enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
         defaultGravityScale = rb.gravityScale;
@@ -77,7 +98,12 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, vertical * climbSpeed);
         }
 
-          
+        if (healthUI.currentHealth <= 0 && !isDead)
+        {
+            isDead = true;
+            FindObjectOfType<ScreenFader>().HandleDeath();
+
+        }
 
     }
     #region 播放动画的逻辑
@@ -127,13 +153,22 @@ public class PlayerController : MonoBehaviour
         {
             string direction = lastMoveDirection < 0 ? "left" : "right";
             PlayAttack(direction+" attack1", 1f);
+            StartCoroutine(ResetAttackState());
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             string direction = lastMoveDirection < 0 ? "left" : "right";
             PlayAttack(direction+" attack2", 1f);
+            StartCoroutine(ResetAttackState());
         }
     }
+
+    IEnumerator ResetAttackState()
+    {
+        yield return new WaitForSeconds(0.3f); // 攻击持续时间
+        isAttacking = false;
+    }
+
     void PlayAttack(string animationName,float duration)
     {
         isAttacking = true;
@@ -170,6 +205,25 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
     #endregion
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "baihu1")
+        {
+            currentHealth = maxHealth;
+            Debug.Log("血量满啦，宝贝加油！");
+
+            if (healthUI != null)
+            {
+                healthUI.currentHealth = currentHealth;
+                healthUI.UpdateHearts();
+            }
+            else
+            {
+                Debug.LogWarning("PlayerHealthUI实例丢了，UI更新失败");
+            }
+        }
+    }
 
     public void TakeHit(float delay=0.6f)
     {
@@ -216,12 +270,37 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isWounded) return;
         if (collision.CompareTag("Ladder"))
         {
             isClimbing = true;
             rb.gravityScale = 0f;
             rb.velocity = Vector2.zero;
         }
+
+        if (collision.CompareTag("Trap"))
+        {
+            StartCoroutine(PlayHurtAnimation(1f, 0.5f));
+        }
+
+        if (collision.CompareTag("Enemy"))
+        {
+            healthUI.TakeDamage(1f);
+        }
+    }
+
+    IEnumerator PlayHurtAnimation(float animDuration,float damage)
+    {
+        isWounded = true;
+        Debug.Log("受伤，-0.5");
+        healthUI.TakeDamage(damage);
+        player.SetTrigger("Wound");
+
+        yield return new WaitForSeconds(animDuration);
+       
+        isWounded = false;
+        
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -236,4 +315,6 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("碰到了：" + collision.gameObject.name);
     }
+
+    
 }

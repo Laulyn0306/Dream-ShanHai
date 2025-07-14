@@ -32,3 +32,16 @@ MonoBehaviour:
   - enemyID: XW
     magicPrefab: {fileID: 2965351275218782501, guid: 8280809c49fbcc544a8b2835ce4e064f,
       type: 3}
+  cardMappings:
+  - enemyID: BH
+    magicPrefab: {fileID: 8373782422026949663, guid: a5bab0d686a8b6249aa9a145504555d3,
+      type: 3}
+  - enemyID: FH
+    magicPrefab: {fileID: 8718813464152733311, guid: e16e456d852cb9f469cac237a98e4740,
+      type: 3}
+  - enemyID: QL
+    magicPrefab: {fileID: 5903688713731687044, guid: 283a593757055c341b9b3e7e0f7bd27a,
+      type: 3}
+  - enemyID: XW
+    magicPrefab: {fileID: 1453621725784284355, guid: 3fa0deac031ef8a4c95c75cf510d6e61,
+      type: 3}

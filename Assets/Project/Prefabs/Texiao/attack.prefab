@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 23444589079713630}
   - component: {fileID: 23444589079713619}
   - component: {fileID: -4551297915688625538}
+  - component: {fileID: 7114194884918771003}
+  - component: {fileID: 3721202261998100783}
   m_Layer: 0
   m_Name: attack
   m_TagString: Untagged
@@ -137,3 +139,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magicHitDelay: 0.6
+--- !u!58 &7114194884918771003
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23444589079713631}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
+--- !u!114 &3721202261998100783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23444589079713631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3899edc727565d3499ad7cfb786ab387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 1
+  hitDelay: 0.5

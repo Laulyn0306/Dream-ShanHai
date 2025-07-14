@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+
 
 public class EnemyController : MonoBehaviour
 {
@@ -50,6 +53,16 @@ public class EnemyController : MonoBehaviour
     public float magicHitDelay = 0.6f;
 
     private string enemyID;
+
+    [Header("血量系统")]
+    public float maxHealth = 100f;
+    private float currentHealth;
+    public Slider healthSlider;
+
+    public GameObject cardPrefab;
+
+    public Transform canvasTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,7 +71,15 @@ public class EnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         enemyID = GetIDFromName(gameObject.name);
+
+        currentHealth = maxHealth;
         Debug.Log($"自动识别到 enemyID: {enemyID}");
+
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = currentHealth;
+        }
     }
 
     // Update is called once per frame
@@ -67,7 +88,7 @@ public class EnemyController : MonoBehaviour
         //测试受伤逻辑
         if (Input.GetKeyDown(KeyCode.R))
         {
-            TakeDamage();
+            TakeDamage(25f);
         }
 
         if (isHurt)
@@ -213,8 +234,24 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void TakeDamage()
+    public void TakeDamage(float amount)
     {
+
+        if (isHurt) return;
+
+        currentHealth -= amount;
+
+        if (healthSlider != null)
+        {
+            healthSlider.value = currentHealth;
+        }
+
+        if (currentHealth <= 0)
+        {
+            Die();
+            return;
+        }
+
         if (!isHurt)//防止重复播放
         {
 
@@ -250,6 +287,31 @@ public class EnemyController : MonoBehaviour
         
     }
 
+    private void Die()
+    {
+        GameObject cardPrefab = GetCardPrefabByID(enemyID);
+
+        if (cardPrefab != null)
+        {
+            GameObject card = Instantiate(cardPrefab, canvasTransform);
+            card.transform.localPosition = Vector3.zero;
+
+        }
+        else
+        {
+            Debug.LogWarning("没有对应的卡片，默认不生成！");
+        }
+
+        if (healthSlider != null)
+        {
+            var fade = healthSlider.gameObject.AddComponent<FadeAndDestroy>();
+            fade.fadeDuration = 1.5f; // 你可以自定义时长
+            fade.StartFade();
+        }
+
+        Debug.Log("敌人死了");
+        Destroy(gameObject);
+    }
     IEnumerator TurnAround()
     {
         isTurning = true;
@@ -357,5 +419,14 @@ public class EnemyController : MonoBehaviour
         return null;
     }
 
-    
+    private GameObject GetCardPrefabByID(string id)
+    {
+        foreach(var mapping in data.cardMappings)
+        {
+            if (mapping.enemyID == id)
+                return mapping.magicPrefab;
+        }
+        Debug.LogWarning($"没找到ID为{id}的卡片，请检查设置！");
+        return null;
+    }
 }

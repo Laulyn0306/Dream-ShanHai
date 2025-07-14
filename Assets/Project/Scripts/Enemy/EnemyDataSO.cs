@@ -24,4 +24,7 @@ public class EnemyDataSO : ScriptableObject
 
     [Header("敌人id和特效映射")]
     public List<MagicMapping> magicMappings;
+
+    [Header("敌人id和卡片映射")]
+    public List<MagicMapping> cardMappings;
 }
