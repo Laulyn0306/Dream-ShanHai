@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         
         rb.velocity = new Vector2(moveInput * movespeed, rb.velocity.y);
 
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer)||isClimbing;
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
         if (scene.name == "baihu1")
         {
             currentHealth = maxHealth;
-            Debug.Log("血量满啦，宝贝加油！");
+            
 
             if (healthUI != null)
             {
@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("PlayerHealthUI实例丢了，UI更新失败");
+                
             }
         }
     }

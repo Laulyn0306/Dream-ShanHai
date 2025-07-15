@@ -47,13 +47,21 @@ MonoBehaviour:
     type: 3}
   sceneNameImageList:
   - sceneName: baihu1
-    levelNameImage: {fileID: 21300000, guid: 872f0d2b53a3398429b8c3e3d4e83fce, type: 3}
+    levelNameImage:
+    - {fileID: 21300000, guid: d87291bc37cfb55449f395dc6bc72327, type: 3}
+    - {fileID: 21300000, guid: 0ec5c89d0b1125148ba9a26b2c5e0039, type: 3}
   - sceneName: qinglong1
-    levelNameImage: {fileID: 21300000, guid: 6d0a113c2c4340046aa6504fb7483627, type: 3}
+    levelNameImage:
+    - {fileID: 21300000, guid: 682e5d9082311624b8b6f855d32eec35, type: 3}
+    - {fileID: 21300000, guid: f9dd3b6d1e0ef9d439149fbf6dae0bd4, type: 3}
   - sceneName: xuanwu1
-    levelNameImage: {fileID: 21300000, guid: 01efbc1e474da97478d23a1424c82926, type: 3}
+    levelNameImage:
+    - {fileID: 21300000, guid: 2eaad080351dc8f4ba3ddddd27d5670f, type: 3}
+    - {fileID: 21300000, guid: b8c96e41b08e2484991de994778a8084, type: 3}
   - sceneName: zhuque1
-    levelNameImage: {fileID: 21300000, guid: 6b1465c3135e5464c8d220d6f8f79042, type: 3}
+    levelNameImage:
+    - {fileID: 21300000, guid: 1ec8e0b9cd666be4da56d78cb7d39591, type: 3}
+    - {fileID: 21300000, guid: 5c310290f14ccc147a721118cdc4c702, type: 3}
   allowedSceneNames:
   - baihu1
   - qinglong1

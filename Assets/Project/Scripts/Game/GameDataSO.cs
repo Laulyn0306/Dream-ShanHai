@@ -27,7 +27,7 @@ public  class GameDataSO: ScriptableObject
 
         PlayerPrefs.Save();
 
-        Debug.Log($"✅ 已保存");
+       
     }
 
     public  void Load()
@@ -39,7 +39,7 @@ public  class GameDataSO: ScriptableObject
 
        
 
-        Debug.Log($"📦 ");
+       
 
     }
     # endregion

@@ -262,7 +262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6bbf9726737334aad6c9c8d84ae20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn_quit: {fileID: 6489388831089320275}
+  textImage: {fileID: 7939328869020604069}
+  btn_next: {fileID: 6489388831089320275}
 --- !u!1 &8181119326016801659
 GameObject:
   m_ObjectHideFlags: 0

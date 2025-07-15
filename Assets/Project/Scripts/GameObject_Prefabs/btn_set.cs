@@ -22,6 +22,6 @@ public class btn_set : MonoBehaviour
         go.transform.position = new Vector3(0, 0, 0);
         go.transform.rotation = Quaternion.identity;
 
-        Debug.Log("🎉 预制体在场景中生成啦，不在 Canvas 下哟～");
+       
     }
 }

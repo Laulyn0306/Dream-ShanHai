@@ -94,6 +94,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   player: {fileID: 6817935638804277490}
+  isAttacking: 0
   isControled: 0
   enemy: {fileID: 0}
   climbSpeed: 3
@@ -101,7 +102,7 @@ MonoBehaviour:
     type: 3}
   isDead: 0
   maxHealth: 5
-  currentHealth: 0
+  currentHealth: 5
 --- !u!212 &6817935638804277491
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -73,7 +73,7 @@ public class EnemyController : MonoBehaviour
         enemyID = GetIDFromName(gameObject.name);
 
         currentHealth = maxHealth;
-        Debug.Log($"自动识别到 enemyID: {enemyID}");
+       
 
         if (healthSlider != null)
         {
@@ -101,6 +101,18 @@ public class EnemyController : MonoBehaviour
                 
             }
             return;
+        }
+
+        if (!isHurt)
+        {
+            Vector2 direction = Vector2.zero;
+
+            if (chasingPlayer)
+                direction = (player.position - transform.position).normalized;
+            else
+                direction = (goingToB ? pointB.position - transform.position : pointA.position - transform.position).normalized;
+
+            animator.SetFloat("moveX", direction.x);
         }
         #region 攻击>追击>巡逻
         if (player == null)
@@ -143,7 +155,7 @@ public class EnemyController : MonoBehaviour
                 pc.RestroeControlAfterDelay(0.8f);
 
 
-                Debug.Log("远程攻击");
+               
             }
            
         }
@@ -193,7 +205,8 @@ public class EnemyController : MonoBehaviour
     {
         
         Vector2 direction = (target - transform.position).normalized;
-        
+
+        animator.SetFloat("moveX", direction.x);
 
         if (Mathf.Abs(direction.x)>0.01f)
         {
@@ -201,16 +214,22 @@ public class EnemyController : MonoBehaviour
             animator.SetBool("IsWalking", true);
             animator.SetFloat("moveX", direction.x);
 
-            if (direction.x < 0 && lastDirectionX >= 0)
+            if (Mathf.Sign(direction.x) != Mathf.Sign(lastDirectionX))
             {
-                animator.SetTrigger("TurnLeft");
-                Debug.Log("转左");
+                if (direction.x < 0)
+                {
+                    animator.SetTrigger("TurnLeft");
+                    Debug.Log("触发转左动画");
+                }
+                else if (direction.x > 0)
+                {
+                    animator.SetTrigger("TurnRight");
+                    Debug.Log("触发转右动画");
+                }
+
+                lastDirectionX = direction.x;
             }
-            else if (direction.x > 0 && lastDirectionX <= 0)
-            {
-                animator.SetTrigger("TurnRight");
-                Debug.Log("转右");
-            }
+
 
             lastDirectionX = direction.x;
 
@@ -281,7 +300,7 @@ public class EnemyController : MonoBehaviour
 
             Vector2 knockbackDir= (transform.position - player.position).normalized;
             rb.AddForce(data.knockbackForce * knockbackDir, ForceMode2D.Impulse);
-            Debug.Log("qq");
+            
 
         }
         
@@ -299,7 +318,7 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("没有对应的卡片，默认不生成！");
+           
         }
 
         if (healthSlider != null)
@@ -364,13 +383,13 @@ public class EnemyController : MonoBehaviour
         magic.transform.right = directionToPlayer;
 
         Animator magicAnimator = magic.GetComponent<Animator>();
-        Debug.Log($"Animator组件: {magicAnimator}");
+       
 
 
 
         if (magicAnimator == null)
         {
-            Debug.LogWarning("magicPrefab 没有 Animator！");
+           
             return;
         }
 
@@ -415,7 +434,7 @@ public class EnemyController : MonoBehaviour
             if (mapping.enemyID == id)
                 return mapping.magicPrefab;
         }
-        Debug.LogWarning($"没找到 ID 为 {id} 的魔法特效，请检查 EnemyDataSO 设置！");
+       
         return null;
     }
 
@@ -426,7 +445,7 @@ public class EnemyController : MonoBehaviour
             if (mapping.enemyID == id)
                 return mapping.magicPrefab;
         }
-        Debug.LogWarning($"没找到ID为{id}的卡片，请检查设置！");
+      
         return null;
     }
 }

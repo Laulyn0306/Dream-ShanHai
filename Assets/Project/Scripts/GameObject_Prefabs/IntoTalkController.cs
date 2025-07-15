@@ -5,15 +5,46 @@ using UnityEngine.UI;
 
 public class IntoTalkController : MonoBehaviour
 {
-    public Button btn_quit;
-    // Start is called before the first frame update
-    private void Start()
+    
+    public Image textImage;
+    public Button btn_next;
+
+    private List<Sprite> dialogSprites;
+    private int currentIndex = 0;
+
+
+    public void Init(List<Sprite> sprites)
     {
-        btn_quit.onClick.AddListener(() => OnclickedBtn_QUIT());
+        dialogSprites = sprites;
+        currentIndex = 0;
+
+        ShowCurrent();
+
+        btn_next.onClick.AddListener(ShowNext);
     }
 
-    private void OnclickedBtn_QUIT()
+    void ShowCurrent()
     {
-        Destroy(gameObject);
+        if (currentIndex < dialogSprites.Count)
+        {
+            textImage.sprite = dialogSprites[currentIndex];
+            textImage.SetNativeSize();
+        }
+    }
+
+    void ShowNext()
+    {
+        currentIndex++;
+
+        if (currentIndex < dialogSprites.Count)
+        {
+            ShowCurrent();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
+
+
