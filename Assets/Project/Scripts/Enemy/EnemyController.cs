@@ -63,6 +63,8 @@ public class EnemyController : MonoBehaviour
 
     public Transform canvasTransform;
 
+    public GameObject successDialog;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -312,9 +314,16 @@ public class EnemyController : MonoBehaviour
 
         if (cardPrefab != null)
         {
-            GameObject card = Instantiate(cardPrefab, canvasTransform);
+            GameObject card = Instantiate(cardPrefab,canvasTransform);
             card.transform.localPosition = Vector3.zero;
 
+            Debug.Log("卡片出现了");
+            if (enemyID == "QL" && successDialog != null)
+            {
+                Debug.Log("当前 enemyID 是：" + enemyID);
+               
+                StartCoroutine(ShowSuccessDialogAfterDelay(0.5f)); // 你可以自己改这个等待时间
+            }
         }
         else
         {
@@ -329,8 +338,37 @@ public class EnemyController : MonoBehaviour
         }
 
         Debug.Log("敌人死了");
-        Destroy(gameObject);
+        StartCoroutine(DestroyAfter(3f)); // 延迟2秒销毁，等对话框出现
+
     }
+
+    IEnumerator ShowSuccessDialogAfterDelay(float delay)
+    {
+        Debug.Log($"⏳ 等待 {delay} 秒开始执行 ShowSuccessDialogAfterDelay");
+        yield return new WaitForSeconds(delay);
+        Debug.Log("🪄 正在尝试生成成功对话框");
+
+        if (successDialog != null)
+        {
+            GameObject dialog = Instantiate(successDialog);
+           // dialog.transform.SetParent(canvasTransform, false); // 如果你有canvasTransform
+            Debug.Log("✅ 成功对话框出现了！");
+        }
+        else
+        {
+            Debug.Log("⚠️ successDialog 是空的！！");
+        }
+    }
+
+
+    IEnumerator DestroyAfter(float delay)
+    {
+        
+        yield return new WaitForSeconds(delay);
+        gameObject.SetActive(false);
+
+    }
+
     IEnumerator TurnAround()
     {
         isTurning = true;

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneOrder:
+  - VideoScene
   - baihu1
   - baihu2
   - baihu3
@@ -56,6 +57,7 @@ MonoBehaviour:
   - zhuque3
   - qinglong1
   - qinglong2
+  - FinishScene
   currentSceneIndex: 0
 --- !u!61 &1577810628123038227
 BoxCollider2D:

@@ -31,6 +31,9 @@ public class SavaCanvas : MonoBehaviour
     public List<SceneSpritePair> imageSceneMappings;
 
     private Button clickedSlot = null;
+
+    public Button btn_first;
+    public Button btn_second;
     void Start()
     {
         string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
@@ -83,7 +86,8 @@ public class SavaCanvas : MonoBehaviour
         {
             btn_quit.onClick.AddListener(() => OnclickBtn_quit());
         }
-
+        btn_first.onClick.AddListener(() => ClearSaveSlot(0));
+        btn_second.onClick.AddListener(() => ClearSaveSlot(1));
         
         
     }
@@ -184,5 +188,31 @@ public class SavaCanvas : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    public void ClearSaveSlot(int slotIndex)
+    {
+        // 删除指定的 PlayerPrefs 记录
+        PlayerPrefs.DeleteKey($"SaveSlot_{slotIndex}");
+        PlayerPrefs.Save();
+        Debug.Log($"🧹清除了 SaveSlot_{slotIndex} 的存档数据");
+
+        // 清空 UI 显示
+        if (slotIndex >= 0 && slotIndex < saveSlotButtons.Count)
+        {
+            Transform location = saveSlotButtons[slotIndex].transform.Find("location");
+            if (location != null)
+            {
+                Image img = location.GetComponent<Image>();
+                if (img != null)
+                {
+                    img.sprite = null;
+                    img.gameObject.SetActive(false);
+                    Debug.Log($"🧼清除了槽{slotIndex}的图片显示");
+                }
+            }
+        }
+    }
+
+
 }
 

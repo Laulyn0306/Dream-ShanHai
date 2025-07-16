@@ -2526,7 +2526,7 @@ MonoBehaviour:
   SaveCanvas: {fileID: 176139182}
   buttonSceneMappings:
   - button: {fileID: 2044439725}
-    sceneName: baihu1
+    sceneName: VideoScene
     buttonType: 0
   - button: {fileID: 1191220075}
     sceneName: 
